@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS courses (
 		id SERIAL NOT NULL PRIMARY KEY,
 		teacher_id INTEGER REFERENCES teachers(id),
 		subject_code SMALLINT REFERENCES subjects(code),
-		price MONEY
+		price NUMERIC(12, 4)
 		);
 		
 CREATE TABLE IF NOT EXISTS enrolls(
