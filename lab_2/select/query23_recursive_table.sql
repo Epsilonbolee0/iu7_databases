@@ -1,7 +1,15 @@
--- Числа Фибоначчи до 100000 
-WITH RECURSIVE fibonacci(a, b) AS (
-	VALUES(0, 1)
+-- Получить все курсы, предшествующие первому текущему
+ALTER TABLE courses ADD COLUMN father_id INTEGER;
+
+WITH RECURSIVE previous_courses(course_id, subject) AS (
+	SELECT courses.id, courses.subject 
+	FROM courses AS courses_1
+	WHERE courses.id = 1
 	UNION ALL
-	SELECT b, a + b FROM fibonacci WHERE b < 100000
+	SELECT courses.id, courses.subject
+	FROM courses
+	INNER JOIN new_levels 
+	ON courses_1.father_id = courses.id 
 )
-SELECT a FROM fibonacci;
+
+SELECT * FROM previous_courses;

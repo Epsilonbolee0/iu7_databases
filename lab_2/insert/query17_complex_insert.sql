@@ -1,4 +1,4 @@
--- Получение среднестатистической девочки
+-- Получение среднестатистической курс
 INSERT INTO courses (subject_code, teacher_id, price)
 SELECT DISTINCT subject_code, (
 	SELECT id
