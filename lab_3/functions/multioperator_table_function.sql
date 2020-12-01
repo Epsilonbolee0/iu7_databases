@@ -48,6 +48,7 @@ $$
 	JOIN tasks ON tasks.id = task_id AND commentary.id = $1;
 	
 	SELECT * FROM commentary_summary
+	WHERE id = $1;
 $$  LANGUAGE SQL;
 
 SELECT * FROM get_comment_summary(2);
