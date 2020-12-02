@@ -20,11 +20,9 @@ class DatabaseFacade:
         data = self.cursor.fetchall()
         if data is None:
             print(' No query provided!')
-        elif len(data) == 0:
-            print(' Query gave no result!')
         else:
             for row in data:
-                print(row)
+                print(' ', row)
 
     def get_great_schools(self):
         self.cursor.execute("SELECT college_name, passing_grade "
@@ -91,7 +89,7 @@ class DatabaseFacade:
         return True
 
     def delete_bad_tasks(self):
-        self.cursor.callproc("delete_bad_tasks")
+        self.cursor.execute("CALL delete_bad_tasks()")
 
     def drop_permissions_table(self):
         self.cursor.execute("SELECT * FROM information_schema.tables "
@@ -104,9 +102,7 @@ class DatabaseFacade:
             return False
 
         try:
-            self.cursor.execute("CREATE TABLE permissions(id INT PRIMARY KEY,"
-                                "                   role VARCHAR NOT NULL,"
-                                "                   permission_level INT NOT NULL)")
+            self.cursor.execute("DROP TABLE permissions")
         except psycopg2.OperationalError:
             print(" Table drop was denied by postgres!")
             return False
@@ -142,12 +138,71 @@ class DatabaseFacade:
         self.cursor.callproc("version")
         self.query_result()
 
-    def get_teacher_number(self):
+    def get_teacher_count(self):
         self.cursor.callproc("get_teacher_number")
 
 
-facade = DatabaseFacade()
-facade.get_teacher_summary()
-facade.query_result()
+def print_options():
+    print(" [0] Get great schools")
+    print(" [1] Get unpopular courses")
+    print(" [2] Get teacher count")
+    print(" [3] Get all tables")
+    print(" [4] Get table columns")
+    print(" [5] Get comment summary")
+    print(" [6] Create permission table")
+    print(" [7] Drop permission table")
+    print(" [8] Add new permission")
+    print(" [9] Delete bad tasks")
+    print(" [10] Get Postgres version")
 
 
+def menu():
+    facade = DatabaseFacade()
+    while True:
+        print_options()
+        option = int(input(" Choose wisely: "))
+        if option == 0:
+            facade.get_great_schools()
+            facade.query_result()
+        elif option == 1:
+            facade.get_unpopular_courses()
+            facade.query_result()
+        elif option == 2:
+            facade.get_teacher_count()
+            facade.query_result()
+        elif option == 3:
+            facade.get_tables()
+            facade.query_result()
+        elif option == 4:
+            table_name = input(" Enter name of table: ")
+            facade.get_table_columns(table_name)
+            facade.query_result()
+        elif option == 5:
+            comment_id = int(input(" Enter comment id: "))
+            if comment_id < 0:
+                print(" Invalid comment id")
+                continue
+            facade.get_comment_summary(comment_id)
+            facade.query_result()
+        elif option == 6:
+            facade.create_permission_table()
+        elif option == 7:
+            facade.drop_permissions_table()
+        elif option == 8:
+            id, permission_level = map(int, input(" Enter id and level: ").split())
+            if not id or not permission_level:
+                print(" Id or permission level is no integer")
+                continue
+            role = input(" Enter role: ")
+            facade.add_new_permission(id, role, permission_level)
+        elif option == 9:
+            facade.delete_bad_tasks()
+        elif option == 10:
+            facade.get_version()
+            facade.query_result()
+        else:
+            print(" Invalid option. Please, try again")
+        input(" Press any key to continue\n ")
+
+
+menu()
