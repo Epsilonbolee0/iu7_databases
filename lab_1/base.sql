@@ -122,15 +122,15 @@ ALTER TABLE colleges ADD CONSTRAINT valid_rating CHECK(rating > 0);
 ALTER TABLE teachers DROP CONSTRAINT valid_result;
 ALTER TABLE teachers ADD CONSTRAINT valid_result CHECK(exam_result > 30 and exam_result <= 100);
 
-COPY subjects(code, name) FROM 'C:\studies\sem_5\DB\base\src\subjects.csv' WITH (FORMAT csv);
-COPY accounts(email, name, sex, birth_date, account_type, login, salt, hash) FROM 'C:\studies\sem_5\DB\base\src\accounts.csv' WITH (FORMAT csv);
-COPY students(id, grade, purpose, account_level, rating) FROM 'C:\studies\sem_5\DB\base\src\students.csv' WITH (FORMAT csv);
-COPY colleges(college_name, number_of_places, passing_grade, rating, address, site, phone_number) FROM 'C:\studies\sem_5\DB\base\src\colleges.csv' WITH (FORMAT csv);
-COPY themes(code, subject_code, name) FROM 'C:\studies\sem_5\DB\base\src\themes.csv' WITH (FORMAT csv);
-COPY teachers(id, college_id, profile_subject_id, has_red_diploma, exam_result, degree, rating) FROM 'C:\studies\sem_5\DB\base\src\teachers.csv' WITH (FORMAT csv);
-COPY courses(teacher_id, subject_code, price) FROM 'C:\studies\sem_5\DB\base\src\courses.csv' WITH (FORMAT csv);
-COPY homeworks(course_id, rating_cost, deadline) FROM 'C:\studies\sem_5\DB\base\src\homeworks.csv' WITH (FORMAT csv);
-COPY tasks(homework_id, theme_code, author_id, data, solution, publication_date, rating) FROM 'C:\studies\sem_5\DB\base\src\tasks.csv' WITH (FORMAT csv);
-COPY commentary(author_id, task_id, data, publication_date, rating) FROM 'C:\studies\sem_5\DB\base\src\comments.csv' WITH (FORMAT csv);
-COPY enrolls(student_id, course_id) FROM 'C:\studies\sem_5\DB\base\src\enrolls.csv' WITH (FORMAT csv);
+COPY subjects(code, name) FROM '/home/nick/dev/iu7_databases/lab_1/src/subjects.csv' WITH (FORMAT csv);
+COPY accounts(email, name, sex, birth_date, account_type, login, salt, hash) FROM '/home/nick/dev/iu7_databases/lab_1/src/accounts.csv' WITH (FORMAT csv);
+COPY students(id, grade, purpose, account_level, rating) FROM '/home/nick/dev/iu7_databases/lab_1/src/students.csv' WITH (FORMAT csv);
+COPY colleges(college_name, number_of_places, passing_grade, rating, address, site, phone_number) FROM '/home/nick/dev/iu7_databases/lab_1/src/colleges.csv' WITH (FORMAT csv);
+COPY themes(code, subject_code, name) FROM '/home/nick/dev/iu7_databases/lab_1/src/themes.csv' WITH (FORMAT csv);
+COPY teachers(id, college_id, profile_subject_id, has_red_diploma, exam_result, degree, rating) FROM '/home/nick/dev/iu7_databases/lab_1/src/teachers.csv' WITH (FORMAT csv);
+COPY courses(teacher_id, subject_code, price) FROM '/home/nick/dev/iu7_databases/lab_1/src/courses.csv' WITH (FORMAT csv);
+COPY homeworks(course_id, rating_cost, deadline) FROM '/home/nick/dev/iu7_databases/lab_1/src/homeworks.csv' WITH (FORMAT csv);
+COPY tasks(homework_id, theme_code, author_id, data, solution, publication_date, rating) FROM '/home/nick/dev/iu7_databases/lab_1/src/tasks.csv' WITH (FORMAT csv);
+COPY commentary(author_id, task_id, data, publication_date, rating) FROM '/home/nick/dev/iu7_databases/lab_1/src/comments.csv' WITH (FORMAT csv);
+COPY enrolls(student_id, course_id) FROM '/home/nick/dev/iu7_databases/lab_1/src/enrolls.csv' WITH (FORMAT csv);
 
