@@ -4,7 +4,7 @@ import psycopg2
 class DatabaseFacade:
     def __init__(self):
         self.connection = psycopg2.connect(dbname='educational_site', user='postgres',
-                                           password='1029384756tnn_', host='localhost')
+                                           password='pososi', host='localhost')
         self.cursor = self.connection.cursor()
 
     def __del__(self):
