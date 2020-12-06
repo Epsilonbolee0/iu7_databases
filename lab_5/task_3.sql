@@ -5,16 +5,16 @@ FROM json_extract_path('{"name": "zikkurat", "faction": "undeads", "data": {"pri
 
 -- (2) Извлечь значения конкретных узлов или атрибутов JSON документа
 -- Все авторы в таблице, написавшие книги со сложностью больше 3
-SELECT DISTINCT(data_json->>'author') AS author, (data_json->>'difficulty')::int AS difficulty 
+SELECT DISTINCT(data_json->'author') AS author, (data_json->'difficulty')::int AS difficulty 
 FROM tasks_copy
 WHERE (data_json->>'difficulty')::int > 3;
 
 -- (3) Выполнить проверку существования узла или атрибута
 -- Получение всех книг, у которых есть сложность
-SELECT DISTINCT(data_json->>'book') AS book
+SELECT DISTINCT(data_json->'book') AS book
 FROM tasks_copy
 WHERE data_json::jsonb ? 'difficulty'::text
-ORDER BY data_json->>'book';
+ORDER BY data_json->'book';
 
 -- (4) Изменить JSON документ
 -- Удалить из документов параметр picture

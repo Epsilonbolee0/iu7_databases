@@ -7,19 +7,14 @@ RETURNS TABLE(name VARCHAR, average FLOAT, min FLOAT, max FLOAT)
 AS $$
 student_ratings = plpy.execute('SELECT s.id, c.rating FROM students s JOIN commentary c ON s.id = c.author_id')
 name_ = plpy.execute('SELECT name FROM students s JOIN accounts a ON s.id = a.id WHERE a.id = ' + str(id_))[0]['name']
-average_rating, max_rating, min_rating = 0, -10000, 10000
-cnt = 0
 
-for row_ in student_ratings:
-	if row_['id'] == id_:
-		average_rating += row_['rating'] 
-		cnt += 1
-		if row_['rating'] > max_rating:
-			max_rating = row_['rating']
-		if row_['rating'] < min_rating:
-			min_rating = row_['rating']
-			
-average_rating = 0 if cnt == 0 else average_rating
+student_ratings_ = filter(lambda value: row['id'] == id_, student_ratings)
+
+max_rating = max(student_ratings_, key=lambda row_: row_['rating'])
+min_rating = min(student_ratings_, key=lambda row_: row_['rating'])
+cnt = len(student_ratings_)
+average_rating = 0 if cnt == 0 else sum(students_ratings_) / cnt
+
 value_dict = {'name' : student_ratings[0], 'average': average_rating, 'min': min_rating, 'max': max_rating}
 return [value_dict]
 $$ LANGUAGE plpython3u;
